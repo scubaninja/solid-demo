@@ -8,7 +8,7 @@ permissions:
       contents: read
 
 jobs:
-  buildImage:
+  build-Image:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
 
