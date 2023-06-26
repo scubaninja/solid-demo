@@ -1,6 +1,7 @@
 name: Deploy to Azure Container Apps
 
-on: pull_request
+# on: pull_request
+on: workflow_dispatch
 
 permissions:
       id-token: write
