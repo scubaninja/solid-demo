@@ -1,0 +1,19 @@
+name: Deploy to Azure Container Apps
+
+on: pull_request
+
+jobs:
+  buildImage:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+    # checkout code
+    - name: checkout branch
+      uses: actions/checkout@v2
+
+    # log into Azure
+    - name: "Login via Azure CLI"
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
