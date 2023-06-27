@@ -1,0 +1,27 @@
+name: Terraform Plan
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2.0.3
+      with:
+        terraform_version: latest
+        
+    - name: Lint Terraform
+      uses: actionshub/terraform-lint@master
+    
+    - name: Terraform Init
+      run: terraform init
+
+    
