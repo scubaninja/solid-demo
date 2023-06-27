@@ -1,0 +1,16 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "go.toolsManagement.checkForUpdates": "local",
+        "go.useLanguageServer": true,
+        "go.goroot": "/usr/local/go"
+      },
+      "extensions": [
+        "hashicorp.terraform",
+        "golang.Go"
+      ]
+    }
+  }
+}
