@@ -1,0 +1,26 @@
+name: Deploy to Azure Container Apps
+
+# on: pull_request
+on: workflow_dispatch
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs:
+  build-image:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+    # checkout code
+    - name: checkout branch
+      uses: actions/checkout@v2
+
+    # log into Azure with OIDC
+    - name: OIDC Login to Azure Public Cloud 
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
