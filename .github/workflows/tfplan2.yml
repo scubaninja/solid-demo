@@ -1,4 +1,4 @@
-name: 'Terraform Plan/Apply'
+name: 'Terraform Plan with Output'
 
 on: 
   workflow_dispatch:
