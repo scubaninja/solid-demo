@@ -1,0 +1,43 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  // Features to add to the dev container  
+  "features": {
+          "ghcr.io/devcontainers/features/azure-cli:1": {},
+          "ghcr.io/devcontainers/features/github-cli:1": {},
+		      "ghcr.io/devcontainers/features/powershell:1": {},
+		      "ghcr.io/devcontainers/features/terraform:1": {},
+		      "ghcr.io/devcontainers-contrib/features/terrascan:1": {},
+		      "ghcr.io/devcontainers-contrib/features/checkov:1": {},
+		      "ghcr.io/dhoeric/features/terraform-docs:1": {},
+		      "ghcr.io/dhoeric/features/tfsec:1": {},
+		      "ghcr.io/devcontainers-contrib/features/pre-commit:2": {},
+		      "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+			            "packages": "chromium-browser"
+  }
+},
+  
+// Configuring Tool specific properties
+"customizations": {
+		"vscode": {
+			"extensions": [
+				      "GitHub.copilot",
+				      "GitHub.vscode-pull-request-github",
+				      "streetsidesoftware.code-spell-checker",
+				      "hashicorp.terraform",
+				      "ms-azuretools.vscode-azureterraform",
+				      "tfsec.tfsec",
+				      "Bridgecrew.checkov",
+				      "yzhang.markdown-all-in-one"
+			  ]
+    }
+}
+  
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "uname -a"
+}
+
+  
+  
+  
