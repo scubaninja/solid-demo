@@ -24,7 +24,7 @@ module "vnet-main" {
 
   tags = {
     environment = "prod"
-    
+
   }
 
   depends_on = [azurerm_resource_group.vnet_main]
