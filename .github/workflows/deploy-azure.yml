@@ -57,8 +57,4 @@ jobs:
         connection-string: ${{ secrets.AZ_APPINSIGHTS_CONNECTION_STRING }}
         subscription-token: ${{ secrets.AZ_SUBSCRIPTION_TOKEN }}
 
-  deploy_container:
 
-    runs-on: ubuntu-latest
-    name: Create and Deploy Container to Azure
-    needs: build-image
