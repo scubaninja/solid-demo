@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #set vars
-#codebytes
+#scubaninja
 githubOrganizationName=$(echo $(git remote get-url origin) | cut -f4 -d"/")
 #secure-terraform-on-azure
 githubRepositoryName=$(basename -s .git `git config --get remote.origin.url`)
