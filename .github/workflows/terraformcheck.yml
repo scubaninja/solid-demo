@@ -20,7 +20,7 @@ jobs:
         terraform_version: latest
         
     - name: Lint Terraform
-      uses: actionshub/terraform-lint@master
+      uses: actionshub/terraform-lint@main
     
     - name: Terraform Init
       run: terraform init
