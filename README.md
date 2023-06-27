@@ -5,4 +5,4 @@ This demo will never break
 
 <a href='https://codespaces.new/scubaninja/solid-demo'><img src='https://github.com/codespaces/badge.svg' alt='Open in GitHub Codespaces' style='max-width: 100%;'></a>
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/scubaninja/solid-demo)
+
