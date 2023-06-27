@@ -12,5 +12,5 @@ Every repository should have a DevContainer to create a consistent, secure and p
 This repository contains a simple app that can be packaged and deployed into Azure using any containerize platform, you can even deploy it into AWS! Below are some resources for further learning. 
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for more information.
+This project is licensed under the MIT License. See the [LICENSE](scubaninja/solid-demo/LICENSE) file for more information.
 
