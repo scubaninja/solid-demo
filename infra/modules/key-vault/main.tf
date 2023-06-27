@@ -56,7 +56,7 @@ resource "azurerm_key_vault_secret" "database_username" {
   value        = var.database_username
   key_vault_id = azurerm_key_vault.application.id
 
-  depends_on = [ azurerm_key_vault_access_policy.client ]
+  depends_on = [azurerm_key_vault_access_policy.client]
 }
 
 resource "azurerm_key_vault_secret" "database_password" {
@@ -64,7 +64,7 @@ resource "azurerm_key_vault_secret" "database_password" {
   value        = var.database_password
   key_vault_id = azurerm_key_vault.application.id
 
-  depends_on = [ azurerm_key_vault_access_policy.client ]
+  depends_on = [azurerm_key_vault_access_policy.client]
 }
 
 resource "azurerm_key_vault_secret" "storage_account_key" {
@@ -72,7 +72,7 @@ resource "azurerm_key_vault_secret" "storage_account_key" {
   value        = var.storage_account_key
   key_vault_id = azurerm_key_vault.application.id
 
-  depends_on = [ azurerm_key_vault_access_policy.client ]
+  depends_on = [azurerm_key_vault_access_policy.client]
 }
 
 resource "azurerm_key_vault_secret" "cosmosdb_mongodb_uri" {
@@ -80,5 +80,5 @@ resource "azurerm_key_vault_secret" "cosmosdb_mongodb_uri" {
   value        = var.cosmosdb_mongodb_uri
   key_vault_id = azurerm_key_vault.application.id
 
-  depends_on = [ azurerm_key_vault_access_policy.client ]
+  depends_on = [azurerm_key_vault_access_policy.client]
 }

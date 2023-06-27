@@ -51,8 +51,8 @@ resource "azurerm_linux_web_app" "application" {
     application_stack {
       dotnet_version = "6.0"
     }
-    always_on        = true
-    ftps_state       = "FtpsOnly"
+    always_on  = true
+    ftps_state = "FtpsOnly"
   }
 
   identity {
