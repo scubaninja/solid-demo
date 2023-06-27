@@ -37,7 +37,7 @@ jobs:
       with:
         login-server: ${{ secrets.ACR_LOGIN_SERVER }}
         username: ${{ secrets.ACR_USERNAME }}
-        password: salkjfoiwe3vjajrf;lk
+        password: ${{ secrets.ACR_PASSWORD }}
 
     # Build and push Docker image
     - name: Build and push
