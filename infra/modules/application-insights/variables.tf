@@ -7,17 +7,17 @@ variable "resource_group" {
 variable "application_name" {
   type        = string
   description = "The name of your application"
-  default     = ""
+  default     = "app"
 }
 
 variable "environment" {
   type        = string
   description = "The environment (dev, test, prod...)"
-  default     = "dev"
+  default     = "prod"
 }
 
 variable "location" {
   type        = string
   description = "The Azure region where all resources in this example should be created"
-  default     = ""
+  default     = "westeurope"
 }

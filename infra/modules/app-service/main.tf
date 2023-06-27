@@ -1,99 +1,55 @@
+# Configure the Azure provider
 terraform {
   required_providers {
-    azurecaf = {
-      source  = "aztfmod/azurecaf"
-      version = "1.2.16"
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0.0"
     }
   }
+  required_version = ">= 0.14.9"
+}
+provider "azurerm" {
+  features {}
 }
 
-resource "azurecaf_name" "app_service_plan" {
-  name          = var.application_name
-  resource_type = "azurerm_app_service_plan"
-  suffixes      = [var.environment]
+# Generate a random integer to create a globally unique name
+resource "random_integer" "ri" {
+  min = 10000
+  max = 99999
 }
 
-# This creates the plan that the service use
-resource "azurerm_service_plan" "application" {
-  name                = azurecaf_name.app_service_plan.result
-  resource_group_name = var.resource_group
-  location            = var.location
+# Create the resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "myResourceGroup-${random_integer.ri.result}"
+  location = "eastus"
+}
 
-  sku_name = "S1"
-  os_type  = "Linux"
+# Create the Linux App Service Plan
+resource "azurerm_service_plan" "appserviceplan" {
+  name                = "webapp-asp-${random_integer.ri.result}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  os_type             = "Linux"
+  sku_name            = "B1"
+}
 
-  tags = {
-    "environment"      = var.environment
-    "application-name" = var.application_name
+# Create the web app, pass in the App Service Plan ID
+resource "azurerm_linux_web_app" "webapp" {
+  name                  = "webapp-${random_integer.ri.result}"
+  location              = azurerm_resource_group.rg.location
+  resource_group_name   = azurerm_resource_group.rg.name
+  service_plan_id       = azurerm_service_plan.appserviceplan.id
+  https_only            = true
+  site_config { 
+    minimum_tls_version = "1.2"
   }
 }
 
-resource "azurecaf_name" "app_service" {
-  name          = var.application_name
-  resource_type = "azurerm_app_service"
-  suffixes      = [var.environment]
-}
-
-# This creates the service definition
-resource "azurerm_linux_web_app" "application" {
-  name                = azurecaf_name.app_service.result
-  resource_group_name = var.resource_group
-  location            = var.location
-  service_plan_id     = azurerm_service_plan.application.id
-  https_only          = true
-
-  tags = {
-    "environment"      = var.environment
-    "application-name" = var.application_name
-  }
-
-  site_config {
-    application_stack {
-      dotnet_version = "6.0"
-    }
-    always_on  = true
-    ftps_state = "FtpsOnly"
-  }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  app_settings = {
-    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
-
-    // Monitoring with Azure Application Insights
-    "APPINSIGHTS_INSTRUMENTATIONKEY" = var.azure_application_insights_instrumentation_key
-
-    # These are app specific environment variables
-
-    "DATABASE_URL"      = var.database_url
-    "DATABASE_USERNAME" = var.database_username
-    "DATABASE_PASSWORD" = var.database_password
-
-    "AZURE_STORAGE_ACCOUNT_NAME"  = var.azure_storage_account_name
-    "AZURE_STORAGE_BLOB_ENDPOINT" = var.azure_storage_blob_endpoint
-    "AZURE_STORAGE_ACCOUNT_KEY"   = var.azure_storage_account_key
-
-    "MONGODB_DATABASE" = var.azure_cosmosdb_mongodb_database
-    "MONGODB_URI"      = var.azure_cosmosdb_mongodb_uri
-  }
-}
-
-data "azurerm_client_config" "current" {}
-
-resource "azurerm_key_vault_access_policy" "application" {
-  key_vault_id = var.vault_id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_linux_web_app.application.identity[0].principal_id
-
-  secret_permissions = [
-    "Get",
-    "List"
-  ]
-}
-
-resource "azurerm_app_service_virtual_network_swift_connection" "swift_connection" {
-  app_service_id = azurerm_linux_web_app.application.id
-  subnet_id      = var.subnet_id
+#  Deploy code from a public GitHub repo
+resource "azurerm_app_service_source_control" "sourcecontrol" {
+  app_id             = azurerm_linux_web_app.webapp.id
+  repo_url           = "https://github.com/Azure-Samples/nodejs-docs-hello-world"
+  branch             = "master"
+  use_manual_integration = true
+  use_mercurial      = false
 }

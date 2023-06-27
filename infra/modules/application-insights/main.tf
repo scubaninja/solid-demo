@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    azurecaf = {
-      source  = "aztfmod/azurecaf"
-      version = "1.2.16"
-    }
-  }
-}
-
 resource "azurecaf_name" "application_insights" {
   name          = var.application_name
   resource_type = "azurerm_application_insights"
