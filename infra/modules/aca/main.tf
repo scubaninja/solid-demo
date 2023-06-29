@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_log_analytics_workspace" "loganalytics" {
-  name                = "${var.aca_name}la"
+  name                = "${var.aca_name}demo"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "PerGB2018"
@@ -12,8 +12,8 @@ resource "azurerm_log_analytics_workspace" "loganalytics" {
 }
 
 data "azurerm_container_registry" "acr" {
-  name                = "tamopsactionacr"
-  resource_group_name = "tamops-acr-github"
+  name                = "soliddemoacr"
+  resource_group_name = "soliddemo-acr-github"
 }
 
 resource "azurerm_container_app_environment" "containerappenv" {
