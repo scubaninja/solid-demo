@@ -1,4 +1,4 @@
-name: Multiple Environment Workflow
+name: Deploy Environment -- Azure
 
 on: pull_request
 
