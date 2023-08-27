@@ -23,11 +23,11 @@ jobs:
       uses: actions/checkout@v2
 
     # log into Azure
-    - name: "Login via Azure CLI"
+    - name: Login to Azure
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-
+   
     # authenticate into Docker
     - name: "docker login"
       uses: azure/docker-login@v1
