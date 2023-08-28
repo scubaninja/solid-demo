@@ -2,7 +2,7 @@ name: Deploy Environment -- Azure
 
 on: workflow_dispatch
 
-env:
+# env:
   # The name of the resource group to be created.
   # DEV_RG_NAME: "RG-Dev-AppDeploy-Azure-${{ github.event.pull_request.number}}"
 
