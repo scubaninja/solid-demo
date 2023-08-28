@@ -1,16 +1,16 @@
 name: Deploy Environment -- Azure
 
-on: pull_request
+on: workflow_dispatch
 
 env:
   # The name of the resource group to be created.
-  DEV_RG_NAME: "RG-Dev-AppDeploy-Azure-${{ github.event.pull_request.number}}"
+  # DEV_RG_NAME: "RG-Dev-AppDeploy-Azure-${{ github.event.pull_request.number}}"
 
   # The location to store the meta data for the deployment.
-  DEV_LOCATION: "westeurope"
+  # DEV_LOCATION: "westeurope"
 
   # The name of the WebApp
-  DEV_WEBAPP_NAME: "DEV-AppDeploy-Azure-${{ github.event.pull_request.number}}"
+  # DEV_WEBAPP_NAME: "DEV-AppDeploy-Azure-${{ github.event.pull_request.number}}"
 
 jobs:
   buildImage:
@@ -24,7 +24,7 @@ jobs:
 
     # log into Azure
     - name: Login to Azure
-      uses: azure/login@v1
+      uses: Azure/login@v1.4.6
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
    
