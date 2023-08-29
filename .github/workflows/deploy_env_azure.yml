@@ -91,8 +91,8 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # deploy infrastructure with Azure Bicep
-    - name: Deploy infrastructure
+    # Deploy infrastructure with Azure Bicep
+    - name: Deploy to Test
       id: azure-deployment
       shell: pwsh
       run: |
