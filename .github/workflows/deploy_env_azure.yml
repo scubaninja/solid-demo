@@ -68,68 +68,12 @@ jobs:
         connection-string: ${{ secrets.AZ_APPINSIGHTS_CONNECTION_STRING }}
         subscription-token: ${{ secrets.AZ_SUBSCRIPTION_TOKEN }}
 
-  deploy_container:
-
-    runs-on: ubuntu-latest
-    name: Create and Deploy Container Image to Azure
-    needs: buildImage
-
-    env:
-      url: https://${{ secrets.DEV_WEBAPP_NAME}}.azurewebsites.net
-    
-    environment:
-      name: Dev
-      url: ${{ env.url }}
-
-    steps:
-    # checkout code
-    - name: checkout branch
-      uses: actions/checkout@v2
-
-    # log into Azure
-    - name: "Login via Azure CLI"
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    # deploy infrastructure with Azure Bicep
-    - name: Deploy infrastructure
-      id: azure-deployment
-      shell: pwsh
-      run: |
-        $deployment = $(az deployment sub create --name ${{ secrets.DEV_RG_NAME }} `
-          --location ${{ secrets.DEV_LOCATION }} `
-          --template-file ./main.bicep `
-          --parameters location=${{ secrets.DEV_LOCATION }} `
-          --parameters rgName=${{ secrets.DEV_RG_NAME }} `
-          --parameters webAppName=${{ secrets.DEV_WEBAPP_NAME}} `
-          --parameters dockerRegistryHost=${{ secrets.DOCKER_LOGIN_SERVER }} `
-          --parameters dockerRegistryServerUsername=${{ secrets.DOCKER_USERNAME }} `
-          --parameters dockerRegistryServerPassword=${{ secrets.DOCKER_PASSWORD }} `
-          --parameters dockerImage=appdeployazure:${{ github.sha }} `
-          --output json) | ConvertFrom-Json
-      working-directory: ./infra/bicep
-
-    # Push container image to Azure WebApp
-    - name: Setup Container
-      id: container-set
-      shell: pwsh
-      run: |
-        $deployment = $(az webapp config container set  --resource-group ${{ secrets.DEV_RG_NAME }} `
-          --name ${{ secrets.DEV_WEBAPP_NAME}} `
-          --docker-custom-image-name ${{ secrets.DOCKER_LOGIN_SERVER }}/appdeployazure:${{ github.sha }} `
-          --docker-registry-server-url https://${{ secrets.DOCKER_LOGIN_SERVER }} `
-          --docker-registry-server-user ${{ secrets.DOCKER_USERNAME }} `
-          --docker-registry-server-password ${{ secrets.DOCKER_PASSWORD }} `
-          --output json) | ConvertFrom-Json
-      working-directory: ./infra/bicep
-    
- 
+  
   deploy_test:
         
     runs-on: ubuntu-latest
     name: Deploy to Test
-    needs: deploy_container
+    needs: buildImage
 
     # output URL from deployment
     environment:
