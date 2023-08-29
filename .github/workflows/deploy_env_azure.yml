@@ -42,7 +42,7 @@ jobs:
       uses: docker/build-push-action@v4.1.1
       with:
         push: true
-        tags: ${{ secrets.DOCKER_LOGIN_SERVER }}/soliddemoimg:${{ github.sha }} */ 
+        tags: ${{ secrets.DOCKER_LOGIN_SERVER }}/soliddemoimg:${{ github.sha }} 
     
     # Build and push docker image
    # - name: Azure Container Registry Build
