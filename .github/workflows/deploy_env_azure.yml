@@ -18,18 +18,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # checkout code
+    # Checkout code
     - name: checkout branch
       uses: actions/checkout@v2
 
-    # log into Azure
+    # Log into Azure
     - name: Login to Azure
       uses: Azure/login@v1.4.6
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
    
-    # authenticate into Docker
-    - name: "docker login"
+    # Authenticate into Azure Container Registry
+    - name: "Azure Container Registry Login"
       uses: azure/docker-login@v1
       with:
         login-server: ${{ secrets.DOCKER_LOGIN_SERVER }}
@@ -37,12 +37,20 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     # Build and push Docker image
-    - name: Build and push
-      id: docker_build
-      uses: docker/build-push-action@v2
+   # - name: Build and push
+    #  id: docker_build
+     #  uses: docker/build-push-action@v2
+     #  with:
+       #  push: true
+      #  tags: ${{ secrets.DOCKER_LOGIN_SERVER }}/soliddemoimg:${{ github.sha }} */ 
+    
+    # Build and push docker image
+    - name: Azure Container Registry Build
+      uses: Azure/acr-build@v1
       with:
         push: true
-        tags: ${{ secrets.DOCKER_LOGIN_SERVER }}/appdeployazure:${{ github.sha }}
+        tags: ${{ secrets.DOCKER_LOGIN_SERVER }}/soliddemoimg:${{ github.sha }}
+    
 
     # Scanning Images using Microsoft Defender
     - uses: Azure/container-scan@v0 
@@ -50,7 +58,7 @@ jobs:
       id: container-scan
       continue-on-error: true
       with:
-        image-name: ${{ secrets.DOCKER_LOGIN_SERVER }}/appdeployazure:${{ github.sha }} 
+        image-name: ${{ secrets.DOCKER_LOGIN_SERVER }}/soliddemoimg:${{ github.sha }} 
 
     # Sending logs to AppInsights
     - name: Post logs to appinsights
@@ -63,7 +71,7 @@ jobs:
   deploy_container:
 
     runs-on: ubuntu-latest
-    name: Create and Deploy Container to Azure
+    name: Create and Deploy Container Image to Azure
     needs: buildImage
 
     env:
