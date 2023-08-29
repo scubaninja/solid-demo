@@ -84,22 +84,22 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Deploy infrastructure with Azure Bicep
-    - name: Deploy to Test
-      id: azure-deployment
-      shell: pwsh
-      run: |
-        $deployment = $(az deployment sub create --name ${{ secrets.TEST_RG_NAME }} `
-          --location ${{ secrets.TEST_LOCATION }} `
-          --template-file ./main.bicep `
-          --parameters location=${{ secrets.TEST_LOCATION }} `
-          --parameters rgName=${{ secrets.TEST_RG_NAME }} `
-          --parameters webAppName=${{ secrets.TEST_WEBAPP_NAME}} `
-          --parameters dockerRegistryHost=${{ secrets.DOCKER_LOGIN_SERVER }} `
-          --parameters dockerRegistryServerUsername=${{ secrets.DOCKER_USERNAME }} `
-          --parameters dockerRegistryServerPassword=${{ secrets.DOCKER_PASSWORD }} `
-          --parameters dockerImage=${{ secrets.DOCKER_LOGIN_SERVER }}/appdeployazure:${{ github.sha }} `
-          --output json) | ConvertFrom-Json
-      working-directory: ./infra/bicep
+   # - name: Deploy to Test
+    #  id: azure-deployment
+    #  shell: pwsh
+    #  run: |
+    #    $deployment = $(az deployment sub create --name ${{ secrets.TEST_RG_NAME }} `
+     #     --location ${{ secrets.TEST_LOCATION }} `
+     #     --template-file ./main.bicep `
+     #     --parameters location=${{ secrets.TEST_LOCATION }} `
+     #     --parameters rgName=${{ secrets.TEST_RG_NAME }} `
+     #     --parameters webAppName=${{ secrets.TEST_WEBAPP_NAME}} `
+     #     --parameters dockerRegistryHost=${{ secrets.DOCKER_LOGIN_SERVER }} `
+     #     --parameters dockerRegistryServerUsername=${{ secrets.DOCKER_USERNAME }} `
+     #     --parameters dockerRegistryServerPassword=${{ secrets.DOCKER_PASSWORD }} `
+     #     --parameters dockerImage=${{ secrets.DOCKER_LOGIN_SERVER }}/appdeployazure:${{ github.sha }} `
+     #     --output json) | ConvertFrom-Json
+     # working-directory: ./infra/bicep
 
     # Push container image to Azure WebApp
     - name: Push container image to Azure WebApp
