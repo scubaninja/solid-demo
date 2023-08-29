@@ -44,14 +44,6 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKER_LOGIN_SERVER }}/soliddemoimg:${{ github.sha }} 
     
-    # Build and push docker image
-   # - name: Azure Container Registry Build
-    #  uses: Azure/acr-build@v1
-     # with:
-      #  push: true
-       # tags: ${{ secrets.DOCKER_LOGIN_SERVER }}/soliddemoimg:${{ github.sha }}
-    
-
     # Scanning Images using Microsoft Defender
     - uses: Azure/container-scan@v0 
       name: Scan image for vulnerabilities
@@ -85,7 +77,7 @@ jobs:
     - name: checkout branch
       uses: actions/checkout@v2
     
-    # log into Azure
+    # Log into Azure
     - name: "Login via Azure CLI"
       uses: azure/login@v1
       with:
@@ -110,7 +102,7 @@ jobs:
       working-directory: ./infra/bicep
 
     # Push container image to Azure WebApp
-    - name: Setup Container
+    - name: Push container image to Azure WebApp
       id: container-set
       shell: pwsh
       run: |
