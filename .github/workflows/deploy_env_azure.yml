@@ -20,7 +20,7 @@ jobs:
     - name: Login to Azure
       uses: Azure/login@v1.4.6
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: sldjfow3jrlksfjbpiwajlk'
    
     # Authenticate into Azure Container Registry
     - name: "Azure Container Registry Login"
