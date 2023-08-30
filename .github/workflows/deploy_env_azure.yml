@@ -2,22 +2,9 @@ name: Deploy Environment -- Azure
 
 on: 
   workflow_dispatch:
-  push:
-      branches:
-      - main
   pull_request:
       branches:
       - main
-
-# env:
-  # The name of the resource group to be created.
-  # DEV_RG_NAME: "RG-Dev-AppDeploy-Azure-${{ github.event.pull_request.number}}"
-
-  # The location to store the meta data for the deployment.
-  # DEV_LOCATION: "westeurope"
-
-  # The name of the WebApp
-  # DEV_WEBAPP_NAME: "DEV-AppDeploy-Azure-${{ github.event.pull_request.number}}"
 
 jobs:
   buildImage:
@@ -59,7 +46,7 @@ jobs:
       with:
         image-name: ${{ secrets.DOCKER_LOGIN_SERVER }}/soliddemoimg:${{ github.sha }} 
 
-    # Sending logs to AppInsights
+    # Sending logs to AppInsights - TODO
   #  - name: Post logs to appinsights
    #   uses: Azure/publish-security-assessments@v0
     #  with: 
