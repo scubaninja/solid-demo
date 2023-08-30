@@ -1,6 +1,13 @@
 name: Deploy Environment -- Azure
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+  push:
+      branches:
+      - main
+  pull_request:
+      branches:
+      - main
 
 # env:
   # The name of the resource group to be created.
@@ -71,6 +78,7 @@ jobs:
     environment:
       name: test
       url:  ${{ steps.get-webapp-url.outputs.webAppUrl }}
+      
  
     steps:
     # checkout code
