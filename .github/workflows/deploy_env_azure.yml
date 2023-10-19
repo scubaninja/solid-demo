@@ -28,7 +28,7 @@ jobs:
       with:
         login-server: ${{ secrets.DOCKER_LOGIN_SERVER }}
         username: ${{ secrets.DOCKER_USERNAME }}
-        password: THisismypassword$$$$$
+        password: THisismypassword$$$$$GAHHHHHHH
 
     # Build and push Docker image
     - name: Build and push
