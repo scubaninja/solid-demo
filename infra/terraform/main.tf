@@ -12,6 +12,15 @@ resource "azurerm_resource_group" "vnet_main" {
   location = var.location
 }
 
+resource "azurerm_virtual_network" "vnet" {
+  name                = var.resource_group_name
+  resource_group_name = azurerm_resource_group.vnet_main.name
+  location            = var.location
+  address_space       = [var.vnet_cidr_range]
+}
+
+
+
 module "vnet-main" {
   source              = "Azure/vnet/azurerm"
   version             = "~> 2.0"
